@@ -1,3 +1,4 @@
+import { TextStyle } from "react-native";
 import { darkColors, lightColors } from "../colors/AppColors";
 import { typographyDark, typographyLight } from "../fonts/AppFonts";
 
@@ -17,40 +18,11 @@ export interface ThemeModelColors {
   border: string;
 }
 
-type FontWeight =
-  | "bold"
-  | "400"
-  | "600"
-  | "normal"
-  | "100"
-  | "200"
-  | "300"
-  | "500"
-  | "700"
-  | "800"
-  | "900";
-
 export interface ThemeModelTypography {
-  heading: {
-    fontSize: number;
-    fontWeight: FontWeight;
-    color: string;
-  };
-  body: {
-    fontSize: number;
-    fontWeight: FontWeight;
-    color: string;
-  };
-  small: {
-    fontSize: number;
-    fontWeight: FontWeight;
-    color: string;
-  };
-  button: {
-    fontSize: number;
-    fontWeight: FontWeight;
-    color: string;
-  };
+  heading: TextStyle;
+  body: TextStyle;
+  small: TextStyle;
+  button: TextStyle;
 }
 
 export const lightTheme: ThemeModel = {
