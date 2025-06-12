@@ -1,13 +1,10 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Switch, Text, View } from "react-native";
-import { ThemeProvider, useTheme } from "./src/hooks/ThemeProvider";
+import { ThemeProvider, useTheme } from "../hooks/ThemeProvider";
+import { ExpoRoot } from "expo-router";
 
 export default function App() {
-  return (
-    <ThemeProvider>
-      <Content />
-    </ThemeProvider>
-  );
+  return <ThemeProvider>{/* <ExpoRoot /> */}</ThemeProvider>;
 }
 
 function Content() {
