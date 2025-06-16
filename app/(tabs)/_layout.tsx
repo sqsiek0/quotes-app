@@ -8,7 +8,9 @@ import {
   TouchableOpacity,
   View,
   ViewStyle,
+  Text,
 } from "react-native";
+import { useTheme } from "../../hooks/ThemeProvider";
 
 type CustomTabBarButtonProps = {
   children: ReactNode;
@@ -17,7 +19,7 @@ type CustomTabBarButtonProps = {
 };
 
 export function createTabBarIcon(
-  routeName: string,
+  routeName: string
 ): (props: {
   focused: boolean;
   color: string;
@@ -28,13 +30,13 @@ export function createTabBarIcon(
       case "index":
         return (
           <View testID="house-icon">
-            <House color={focused ? color : "gray"} size={size} />
+            <House color={color} size={size} />
           </View>
         );
       case "Favorites":
         return (
           <View testID="heart-icon">
-            <Heart color={focused ? color : "gray"} size={size} />
+            <Heart color={color} size={size} />
           </View>
         );
 
@@ -64,11 +66,54 @@ export function CustomTabBarButton({
   }
 }
 
+function getScreenOptions(routeName: string) {
+  return {
+    tabBarIcon: createTabBarIcon(routeName),
+    tabBarActiveTintColor: "#6200ee",
+    tabBarInactiveTintColor: "#999",
+    tabBarStyle: {
+      backgroundColor: "#fff",
+      borderTopColor: "#ccc",
+      borderTopWidth: 1,
+    },
+    headerTitleAlign: "left",
+    headerShadowVisible: false,
+    headerStyle: {
+      backgroundColor: "#fff",
+      borderBottomColor: "#ccc",
+      borderBottomWidth: 1,
+    },
+    headerTintColor: "#000",
+  };
+}
+
 export default function TabLayout() {
+  const [colors, typo] = useTheme();
+
   return (
     <Tabs
       screenOptions={({ route }) => ({
         tabBarIcon: createTabBarIcon(route.name),
+        tabBarActiveTintColor: colors.accent,
+        tabBarInactiveTintColor: colors.secondaryText,
+        tabBarStyle: {
+          backgroundColor: colors.card,
+          borderTopColor: colors.border,
+          borderTopWidth: 1,
+        },
+        headerTitleAlign: "left",
+        headerShadowVisible: false,
+        headerStyle: {
+          backgroundColor: colors.card,
+          borderBottomColor: colors.border,
+          borderBottomWidth: 1,
+        },
+        headerTintColor: colors.text,
+        headerTitleStyle: {
+          color: colors.text,
+          fontSize: typo.heading.fontSize,
+        },
+
         tabBarButton: (props) => {
           return (
             <CustomTabBarButton onPress={props.onPress} style={props.style}>
@@ -81,7 +126,13 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
+          title: "Random quote",
+          tabBarLabel: "Home",
+          headerTitle: "Your Daily Quote",
+          headerTitleAllowFontScaling: true,
+          headerTitleStyle: {
+            fontSize: typo.heading.fontSize,
+          },
         }}
       />
       <Tabs.Screen

@@ -34,7 +34,7 @@ export function useTheme(): [
   colors: ThemeModelColors,
   typography: ThemeModelTypography,
   toggleTheme: () => void,
-  mode: ThemeMode,
+  mode: ThemeMode
 ] {
   const context = useContext(ThemeContext);
   if (!context) {
