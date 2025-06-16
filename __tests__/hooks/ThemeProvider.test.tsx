@@ -5,7 +5,7 @@ import { act } from "react";
 describe("Tests for ThemeProvider", () => {
   test("throws error when useTheme is used without provider", () => {
     expect(() => renderHook(() => useTheme())).toThrow(
-      "useTheme must be used within a ThemeProvider"
+      "useTheme must be used within a ThemeProvider",
     );
   });
 

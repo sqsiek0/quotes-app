@@ -13,7 +13,7 @@ describe("Check if custom functions is working", () => {
       const Icon = createTabBarIcon("index");
 
       const { getByTestId } = render(
-        <Icon focused={true} color="black" size={24} />
+        <Icon focused={true} color="black" size={24} />,
       );
       expect(getByTestId("house-icon")).toBeTruthy();
     });
@@ -22,7 +22,7 @@ describe("Check if custom functions is working", () => {
       const Icon = createTabBarIcon("Favorites");
 
       const { getByTestId } = render(
-        <Icon focused={true} color="black" size={24} />
+        <Icon focused={true} color="black" size={24} />,
       );
       expect(getByTestId("heart-icon")).toBeTruthy();
     });
@@ -51,7 +51,7 @@ describe("Check if custom functions is working", () => {
       const { getByText } = render(
         <CustomTabBarButton onPress={jest.fn()} style={{}}>
           <Text>Click me</Text>
-        </CustomTabBarButton>
+        </CustomTabBarButton>,
       );
 
       expect(getByText("Click me")).toBeTruthy();
@@ -65,7 +65,7 @@ describe("Check if custom functions is working", () => {
       const { getByText } = render(
         <CustomTabBarButton onPress={jest.fn()} style={{}}>
           <Text>Click me</Text>
-        </CustomTabBarButton>
+        </CustomTabBarButton>,
       );
 
       expect(getByText("Click me")).toBeTruthy();
@@ -81,7 +81,7 @@ describe("Check if custom functions is working", () => {
       const { getByText } = render(
         <CustomTabBarButton onPress={handlePress} style={{}}>
           <Text>Click me</Text>
-        </CustomTabBarButton>
+        </CustomTabBarButton>,
       );
 
       fireEvent.press(getByText("Click me"));
