@@ -2,7 +2,6 @@ import { Tabs } from "expo-router";
 import { Heart, House } from "lucide-react-native";
 import React, { ReactNode } from "react";
 import {
-  GestureResponderEvent,
   Platform,
   StyleProp,
   TouchableNativeFeedback,
