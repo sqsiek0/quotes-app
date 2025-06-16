@@ -38,7 +38,6 @@ describe("Check if custom functions is working", () => {
     const originalPlatform = Platform.OS;
 
     afterEach(() => {
-      // Przywróć oryginalną wartość po każdym teście
       Object.defineProperty(Platform, "OS", {
         value: originalPlatform,
       });
