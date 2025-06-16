@@ -13,18 +13,7 @@ import {
 
 type CustomTabBarButtonProps = {
   children: ReactNode;
-  onPress:
-    | (((
-        e:
-          | React.MouseEvent<HTMLAnchorElement, MouseEvent>
-          | GestureResponderEvent
-      ) => void) &
-        ((
-          e:
-            | React.MouseEvent<HTMLAnchorElement, MouseEvent>
-            | GestureResponderEvent
-        ) => void))
-    | undefined;
+  onPress: React.ComponentProps<typeof TouchableOpacity>["onPress"];
   style: StyleProp<ViewStyle>;
 };
 
