@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useTheme } from "../../hooks/ThemeProvider";
+import AppButton from "../../components/AppButton";
 
 export default function HomeScreen() {
   const placeholderQuote = {
@@ -20,12 +21,14 @@ export default function HomeScreen() {
         </Text>
       </View>
       <View style={styles.buttonRow}>
-        <TouchableOpacity style={styles.button} onPress={() => {}}>
+        {/* <TouchableOpacity style={styles.button} onPress={() => {}}>
           <Text style={styles.buttonText}>Button 1</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={() => {}}>
+        </TouchableOpacity> */}
+        <AppButton title={"Test"}></AppButton>
+        <AppButton title={"Test"} outlined={true}></AppButton>
+        {/* <TouchableOpacity style={styles.button} onPress={() => {}}>
           <Text style={styles.buttonText}>Button 2</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
     </View>
   );

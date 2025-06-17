@@ -18,7 +18,7 @@ export const typographyDark: ThemeModelTypography = {
   },
   button: {
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "bold",
     color: "#FFFFFF",
   },
 };
@@ -41,7 +41,7 @@ export const typographyLight: ThemeModelTypography = {
   },
   button: {
     fontSize: 16,
-    fontWeight: "600",
-    color: "#007AFF",
+    fontWeight: "bold",
+    color: "#FFFFFF",
   },
 };
