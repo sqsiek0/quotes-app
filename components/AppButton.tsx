@@ -4,24 +4,25 @@ import {
   StyleSheet,
   Platform,
   TouchableNativeFeedback,
+  TextStyle,
+  ViewStyle,
 } from "react-native";
 import { useTheme } from "../hooks/ThemeProvider";
 
 type AppButtonPros = {
   title: string;
   onPress?: () => void;
-  outlined?: boolean;
 };
 
-export default function AppButton({
-  title,
-  onPress,
-  outlined = false,
-}: AppButtonPros) {
+export default function AppButton({ title, onPress }: AppButtonPros) {
   const [color, typo] = useTheme();
-  const buttonStyle = {
+  const buttonStyle: ViewStyle = {
     ...styles.button,
     backgroundColor: color.accent,
+  };
+  const textStyle: TextStyle = {
+    ...typo.button,
+    textAlign: "center",
   };
 
   if (Platform.OS === "android") {
@@ -31,7 +32,7 @@ export default function AppButton({
         style={buttonStyle}
         onPress={onPress}
       >
-        <Text testID="app-button-title" style={typo.button}>
+        <Text testID="app-button-title" style={textStyle} numberOfLines={1}>
           {title}
         </Text>
       </TouchableNativeFeedback>
@@ -44,7 +45,7 @@ export default function AppButton({
       style={buttonStyle}
       onPress={onPress}
     >
-      <Text testID="app-button-title" style={typo.button}>
+      <Text testID="app-button-title" numberOfLines={1} style={textStyle}>
         {title}
       </Text>
     </TouchableOpacity>
@@ -58,6 +59,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 8,
     paddingVertical: 12,
+    paddingHorizontal: 16,
   },
   buttonOutlined: {
     borderWidth: 1,

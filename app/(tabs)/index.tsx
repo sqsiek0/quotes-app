@@ -21,14 +21,8 @@ export default function HomeScreen() {
         </Text>
       </View>
       <View style={styles.buttonRow}>
-        {/* <TouchableOpacity style={styles.button} onPress={() => {}}>
-          <Text style={styles.buttonText}>Button 1</Text>
-        </TouchableOpacity> */}
-        <AppButton title={"Test"}></AppButton>
-        <AppButton title={"Test"} outlined={true}></AppButton>
-        {/* <TouchableOpacity style={styles.button} onPress={() => {}}>
-          <Text style={styles.buttonText}>Button 2</Text>
-        </TouchableOpacity> */}
+        <AppButton title={"New quote"}></AppButton>
+        <AppButton title={"Add to favourite"}></AppButton>
       </View>
     </View>
   );
@@ -51,19 +45,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     marginTop: 20,
-  },
-  button: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 12,
-    marginHorizontal: 5,
-    backgroundColor: "#007AFF",
-    borderRadius: 4,
-  },
-  buttonText: {
-    color: "#FFFFFF",
-    fontSize: 16,
-    fontWeight: "bold",
+    gap: 10,
   },
 });
