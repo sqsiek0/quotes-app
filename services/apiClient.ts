@@ -12,7 +12,6 @@ export const apiClient = axios.create({
 apiClient.interceptors.response.use(
     (response) => {
         // Handle successful response
-        console.log('API Response:', response.status, response.data);
         return response;
     },
     (error) => {
