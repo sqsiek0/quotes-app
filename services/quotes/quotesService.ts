@@ -3,7 +3,8 @@ import { QuoteListResponse, QuoteResponse } from "../../types/Quotes";
 import { apiClient } from "../apiClient";
 
 export async function fetchRandomQuote(): Promise<QuoteResponse> {
-  const { data } = await apiClient.get<QuoteResponse>(QUOTES_RANDOM);
+  const {data} = await apiClient.get<QuoteResponse>(QUOTES_RANDOM);
+
   return data;
 }
 

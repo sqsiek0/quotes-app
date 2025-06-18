@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useTheme } from "../../hooks/ThemeProvider";
 import AppButton from "../../components/AppButton";
+import { useRandomQuote } from "../../hooks/quotes/useRandomQuote";
 
 export default function HomeScreen() {
   const placeholderQuote = {
@@ -9,15 +10,31 @@ export default function HomeScreen() {
   };
 
   const [color, typo] = useTheme();
+  const { data, isLoading, isError, error } = useRandomQuote();
+
+  if (isLoading) {
+    return (
+      <View style={[styles.container, { backgroundColor: color.background }]}>
+        <Text style={typo.heading}>Loading...</Text>
+      </View>
+    );
+  }
+  if (isError) {
+    return (
+      <View style={[styles.container, { backgroundColor: color.background }]}>
+        <Text style={typo.heading}>Error: {error.message}</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={[styles.container, { backgroundColor: color.background }]}>
       <View style={styles.quoteContainer}>
-        <Text style={typo.heading}>{placeholderQuote.text}</Text>
+        <Text style={typo.heading}>{data?.quote}</Text>
       </View>
       <View style={styles.authorContainer}>
         <Text style={[typo.small, { fontSize: 18 }]}>
-          - {placeholderQuote.author}
+          - {data?.author || placeholderQuote.author}
         </Text>
       </View>
       <View style={styles.buttonRow}>
