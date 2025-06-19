@@ -8,7 +8,7 @@ export async function fetchRandomQuote(): Promise<QuoteResponse> {
   return data;
 }
 
-export async function fetchSingleQuoate(id: number): Promise<QuoteResponse> {
+export async function fetchSingleQuote(id: number): Promise<QuoteResponse> {
   const { data } = await apiClient.get<QuoteResponse>(`/${id}`);
   return data;
 }
