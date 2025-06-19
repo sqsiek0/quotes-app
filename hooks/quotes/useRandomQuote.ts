@@ -6,10 +6,7 @@ export function useRandomQuote() {
   return useQuery<QuoteResponse, Error>(
          {
               queryKey: ["randomQuote"],
-              queryFn: async () => {
-                const quote = await fetchRandomQuote();
-                return quote;
-              }
+              queryFn: fetchRandomQuote,
          },
   );
 }
