@@ -1,15 +1,7 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ActivityIndicator,
-} from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { useTheme } from "../../hooks/ThemeProvider";
 import AppButton from "../../components/AppButton";
 import { useRandomQuote } from "../../hooks/quotes/useRandomQuote";
-import { fetchRandomQuote } from "../../services/quotes/quotesService";
-import { useEffect } from "react";
 
 export default function HomeScreen() {
   const placeholderQuote = {
@@ -22,19 +14,6 @@ export default function HomeScreen() {
     useRandomQuote();
 
   function quoteView() {
-    if (isLoading) {
-      return (
-        <View
-          style={{
-            alignContent: "center",
-            justifyContent: "center",
-            alignSelf: "center",
-          }}
-        >
-          <ActivityIndicator></ActivityIndicator>
-        </View>
-      );
-    }
     if (isError) {
       return (
         <View>
@@ -58,24 +37,27 @@ export default function HomeScreen() {
     }
   }
 
-  return (
-    <View style={[styles.container, { backgroundColor: color.background }]}>
-      {/* {quoteView()} */}
-      {isFetching && (
-        <View
-          style={{
-            alignContent: "center",
-            justifyContent: "center",
-            alignSelf: "center",
-          }}
-        >
+  function handleInitialLoad() {
+    if (isLoading) {
+      return (
+        <View style={styles.loaderContainer}>
           <ActivityIndicator />
         </View>
+      );
+    } else {
+      return quoteView();
+    }
+  }
+
+  return (
+    <View style={[styles.container, { backgroundColor: color.background }]}>
+      {handleInitialLoad()}
+      {!isLoading && (
+        <View style={styles.buttonRow}>
+          <AppButton title={"New quote"} onPress={refetch}></AppButton>
+          <AppButton title={"Add to favourite"}></AppButton>
+        </View>
       )}
-      {/* <View style={styles.buttonRow}>
-        <AppButton title={"New quote"} onPress={refetch}></AppButton>
-        <AppButton title={"Add to favourite"}></AppButton>
-      </View> */}
     </View>
   );
 }
@@ -98,5 +80,10 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: 20,
     gap: 10,
+  },
+  loaderContainer: {
+    alignContent: "center",
+    justifyContent: "center",
+    alignSelf: "center",
   },
 });

@@ -10,7 +10,6 @@ import {
 
 describe("quotesService", () => {
   afterEach(() => {
-    jest.clearAllMocks();
     mockedClient.reset();
   });
 
