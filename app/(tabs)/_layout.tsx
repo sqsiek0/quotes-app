@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import { Heart, House } from "lucide-react-native";
+import { Heart, House, List } from "lucide-react-native";
 import React, { ReactNode } from "react";
 import {
   Platform,
@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
   ViewStyle,
-  Text,
 } from "react-native";
 import { useTheme } from "../../hooks/ThemeProvider";
 
@@ -37,6 +36,12 @@ export function createTabBarIcon(
         return (
           <View testID="heart-icon">
             <Heart color={color} size={size} />
+          </View>
+        );
+      case "Quotes":
+        return (
+          <View testID="quotes-icon">
+            <List color={color} size={size} />
           </View>
         );
 
@@ -135,6 +140,12 @@ export default function TabLayout() {
           },
         }}
       />
+      <Tabs.Screen
+        name="Quotes"
+        options={{
+          title: "Quotes list",
+        }}
+      ></Tabs.Screen>
       <Tabs.Screen
         name="Favorites"
         options={{

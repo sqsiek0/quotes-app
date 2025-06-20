@@ -4,7 +4,6 @@ import { apiClient } from "../apiClient";
 
 export async function fetchRandomQuote(): Promise<QuoteResponse> {
   const {data} = await apiClient.get<QuoteResponse>(QUOTES_RANDOM);
-
   return data;
 }
 

@@ -54,8 +54,15 @@ export default function HomeScreen() {
       {handleInitialLoad()}
       {!isLoading && (
         <View style={styles.buttonRow}>
-          <AppButton title={"New quote"} onPress={refetch}></AppButton>
-          <AppButton title={"Add to favourite"}></AppButton>
+          <AppButton
+            title={"New quote"}
+            onPress={refetch}
+            isLoading={isFetching}
+          ></AppButton>
+          <AppButton
+            title={"Add to favourite"}
+            isDisabled={isFetching}
+          ></AppButton>
         </View>
       )}
     </View>
