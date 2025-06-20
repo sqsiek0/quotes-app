@@ -55,14 +55,14 @@ export default function AppButton({
     );
   }
 
-  const disabled = isLoading || isDisabled;
+  const disabled = isLoading;
 
   if (Platform.OS === "android") {
     return (
       <TouchableNativeFeedback
         testID="app-button-pressable"
         onPress={onPress}
-        disabled={disabled}
+        disabled={disabled || isDisabled}
       >
         <View style={[containerStyle, style, disabled && styles.disabled]}>
           {renderContent()}
@@ -76,7 +76,7 @@ export default function AppButton({
       testID="app-button-pressable"
       style={[containerStyle, style, disabled && styles.disabled]}
       onPress={onPress}
-      disabled={disabled}
+      disabled={disabled || isDisabled}
     >
       {renderContent()}
     </TouchableOpacity>

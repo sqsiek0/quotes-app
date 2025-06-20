@@ -18,7 +18,7 @@ type CustomTabBarButtonProps = {
 };
 
 export function createTabBarIcon(
-  routeName: string,
+  routeName: string
 ): (props: {
   focused: boolean;
   color: string;
@@ -71,26 +71,26 @@ export function CustomTabBarButton({
   }
 }
 
-function getScreenOptions(routeName: string) {
-  return {
-    tabBarIcon: createTabBarIcon(routeName),
-    tabBarActiveTintColor: "#6200ee",
-    tabBarInactiveTintColor: "#999",
-    tabBarStyle: {
-      backgroundColor: "#fff",
-      borderTopColor: "#ccc",
-      borderTopWidth: 1,
-    },
-    headerTitleAlign: "left",
-    headerShadowVisible: false,
-    headerStyle: {
-      backgroundColor: "#fff",
-      borderBottomColor: "#ccc",
-      borderBottomWidth: 1,
-    },
-    headerTintColor: "#000",
-  };
-}
+// function getScreenOptions(routeName: string) {
+//   return {
+//     tabBarIcon: createTabBarIcon(routeName),
+//     tabBarActiveTintColor: "#6200ee",
+//     tabBarInactiveTintColor: "#999",
+//     tabBarStyle: {
+//       backgroundColor: "#fff",
+//       borderTopColor: "#ccc",
+//       borderTopWidth: 1,
+//     },
+//     headerTitleAlign: "left",
+//     headerShadowVisible: false,
+//     headerStyle: {
+//       backgroundColor: "#fff",
+//       borderBottomColor: "#ccc",
+//       borderBottomWidth: 1,
+//     },
+//     headerTintColor: "#000",
+//   };
+// }
 
 export default function TabLayout() {
   const [colors, typo] = useTheme();

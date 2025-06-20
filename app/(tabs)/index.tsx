@@ -4,7 +4,7 @@ import AppButton from "../../components/AppButton";
 import { useRandomQuote } from "../../hooks/quotes/useRandomQuote";
 
 export default function HomeScreen() {
-  const [color, typo] = useTheme();
+  const [colorTheme, typo] = useTheme();
   const { data, isFetching, isLoading, isError, error, refetch } =
     useRandomQuote();
 
@@ -13,11 +13,14 @@ export default function HomeScreen() {
       return (
         <View style={styles.errorContainer} testID="home-screen-error">
           <Text
-            style={[typo.body, { color: color.danger, textAlign: "center" }]}
+            style={[
+              typo.body,
+              { color: colorTheme.danger, textAlign: "center" },
+            ]}
           >
             Error: {error.message}
           </Text>
-          <View style={{ marginTop: 20, width: "50%" }}>
+          <View style={styles.errorButtonContainer}>
             <AppButton
               title={"Retry"}
               onPress={refetch}
@@ -76,7 +79,7 @@ export default function HomeScreen() {
   return (
     <View
       testID="home-screen-view"
-      style={[styles.container, { backgroundColor: color.background }]}
+      style={[styles.container, { backgroundColor: colorTheme.background }]}
     >
       {handleInitialLoad()}
       {renderButtonsRow(isLoading, isError)}
@@ -116,5 +119,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+  },
+  errorButtonContainer: {
+    marginTop: 20,
+    width: "50%",
   },
 });
