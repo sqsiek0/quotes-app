@@ -33,7 +33,7 @@ export default function HomeScreen() {
   function handleInitialLoad() {
     if (isLoading) {
       return (
-        <View style={styles.loaderContainer}>
+        <View style={styles.loaderContainer} testID="home-screen-initial-load">
           <ActivityIndicator />
         </View>
       );
@@ -43,7 +43,10 @@ export default function HomeScreen() {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: color.background }]}>
+    <View
+      testID="home-screen-view"
+      style={[styles.container, { backgroundColor: color.background }]}
+    >
       {handleInitialLoad()}
       {!isLoading && (
         <View style={styles.buttonRow}>
