@@ -9,16 +9,12 @@ export const queryClient = new QueryClient({
       refetchOnReconnect: true,
       staleTime: 5 * 60 * 1000,
       retry: 2,
-      retryDelay: attemptIndex =>
-        Math.min(1000 * 2 ** attemptIndex, 30_000),
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30_000),
       refetchInterval: false,
     },
     mutations: {
       retry: 1,
-      retryDelay: attemptIndex =>
-        Math.min(1000 * 2 ** attemptIndex, 30_000),
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30_000),
     },
-
-    
   },
 });

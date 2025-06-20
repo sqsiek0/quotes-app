@@ -18,7 +18,7 @@ type CustomTabBarButtonProps = {
 };
 
 export function createTabBarIcon(
-  routeName: string
+  routeName: string,
 ): (props: {
   focused: boolean;
   color: string;
