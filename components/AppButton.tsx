@@ -1,13 +1,15 @@
+import React from "react";
 import {
   TouchableOpacity,
+  TouchableNativeFeedback,
+  View,
   Text,
   StyleSheet,
   Platform,
-  TouchableNativeFeedback,
-  TextStyle,
-  ViewStyle,
   ActivityIndicator,
-  View,
+  StyleProp,
+  ViewStyle,
+  TextStyle,
 } from "react-native";
 import { useTheme } from "../hooks/ThemeProvider";
 
@@ -16,16 +18,19 @@ type AppButtonProps = {
   onPress?: () => void;
   isLoading?: boolean;
   isDisabled?: boolean;
+  style?: StyleProp<ViewStyle>;
 };
 
 export default function AppButton({
   title,
   onPress,
-  isLoading,
+  isLoading = false,
   isDisabled = false,
+  style,
 }: AppButtonProps) {
   const [color, typo] = useTheme();
-  const buttonStyle: ViewStyle = {
+
+  const containerStyle: ViewStyle = {
     ...styles.button,
     backgroundColor: color.accent,
   };
@@ -34,27 +39,33 @@ export default function AppButton({
     textAlign: "center",
   };
 
-  function buttonContent() {
+  function renderContent() {
     if (isLoading) {
-      return <ActivityIndicator color={"white"} />;
-    } else {
-      return (
-        <Text testID="app-button-title" style={textStyle} numberOfLines={1}>
-          {title}
-        </Text>
-      );
+      return <ActivityIndicator color="#fff" />;
     }
+    return (
+      <Text
+        testID="app-button-title"
+        style={textStyle}
+        numberOfLines={1}
+        ellipsizeMode="tail"
+      >
+        {title}
+      </Text>
+    );
   }
+
+  const disabled = isLoading || isDisabled;
 
   if (Platform.OS === "android") {
     return (
       <TouchableNativeFeedback
         testID="app-button-pressable"
         onPress={onPress}
-        disabled={isLoading || isDisabled}
+        disabled={disabled}
       >
-        <View style={[buttonStyle, isLoading && styles.disabled]}>
-          {buttonContent()}
+        <View style={[containerStyle, style, disabled && styles.disabled]}>
+          {renderContent()}
         </View>
       </TouchableNativeFeedback>
     );
@@ -63,28 +74,22 @@ export default function AppButton({
   return (
     <TouchableOpacity
       testID="app-button-pressable"
-      style={[buttonStyle, isLoading && styles.disabled]}
+      style={[containerStyle, style, disabled && styles.disabled]}
       onPress={onPress}
-      disabled={isLoading || isDisabled}
+      disabled={disabled}
     >
-      {buttonContent()}
+      {renderContent()}
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   button: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 8,
     paddingVertical: 12,
     paddingHorizontal: 16,
-  },
-  buttonOutlined: {
-    borderWidth: 1,
-    borderColor: "#000",
-    backgroundColor: "transparent",
   },
   disabled: {
     opacity: 0.5,

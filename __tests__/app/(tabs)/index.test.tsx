@@ -68,4 +68,23 @@ describe("index screen - home tab", () => {
     const initialLoad = getByTestId("home-screen-initial-load");
     expect(initialLoad).toBeTruthy();
   });
+
+  test("renders error state", async () => {
+    const mockError = new Error("Network error");
+
+    const mockResult = {
+      data: undefined,
+      isLoading: false,
+      isFetching: false,
+      isError: true,
+      error: mockError,
+    } as UseQueryResult<QuoteResponse, Error>;
+
+    jest.mocked(useRandomQuote).mockReturnValue(mockResult);
+
+    const { getByText } = renderHome();
+
+    const errorText = getByText(`Error: ${mockError.message}`);
+    expect(errorText).toBeTruthy();
+  });
 });

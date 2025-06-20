@@ -11,8 +11,19 @@ export default function HomeScreen() {
   function quoteView() {
     if (isError) {
       return (
-        <View>
-          <Text style={typo.heading}>Error: {error.message}</Text>
+        <View style={styles.errorContainer} testID="home-screen-error">
+          <Text
+            style={[typo.body, { color: color.danger, textAlign: "center" }]}
+          >
+            Error: {error.message}
+          </Text>
+          <View style={{ marginTop: 20, width: "50%" }}>
+            <AppButton
+              title={"Retry"}
+              onPress={refetch}
+              isLoading={isFetching}
+            ></AppButton>
+          </View>
         </View>
       );
     }
@@ -42,25 +53,33 @@ export default function HomeScreen() {
     }
   }
 
+  function renderButtonsRow(isLoading: boolean, isError: boolean) {
+    if (isLoading || isError) {
+      return null;
+    }
+    return (
+      <View style={styles.buttonRow}>
+        <View style={styles.buttonWrapper}>
+          <AppButton
+            title="New quote"
+            onPress={refetch}
+            isLoading={isFetching}
+          />
+        </View>
+        <View style={styles.buttonWrapper}>
+          <AppButton title="Add to favourite" isDisabled={isFetching} />
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View
       testID="home-screen-view"
       style={[styles.container, { backgroundColor: color.background }]}
     >
       {handleInitialLoad()}
-      {!isLoading && (
-        <View style={styles.buttonRow}>
-          <AppButton
-            title={"New quote"}
-            onPress={refetch}
-            isLoading={isFetching}
-          ></AppButton>
-          <AppButton
-            title={"Add to favourite"}
-            isDisabled={isFetching}
-          ></AppButton>
-        </View>
-      )}
+      {renderButtonsRow(isLoading, isError)}
     </View>
   );
 }
@@ -83,10 +102,19 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: 20,
     gap: 10,
+    justifyContent: "space-between",
+  },
+  buttonWrapper: {
+    flex: 1,
   },
   loaderContainer: {
     alignContent: "center",
     justifyContent: "center",
     alignSelf: "center",
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
