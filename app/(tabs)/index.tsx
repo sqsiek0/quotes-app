@@ -4,11 +4,6 @@ import AppButton from "../../components/AppButton";
 import { useRandomQuote } from "../../hooks/quotes/useRandomQuote";
 
 export default function HomeScreen() {
-  const placeholderQuote = {
-    text: "This is a placeholder quote.",
-    author: "Author Name",
-  };
-
   const [color, typo] = useTheme();
   const { data, isFetching, isLoading, isError, error, refetch } =
     useRandomQuote();
@@ -28,9 +23,7 @@ export default function HomeScreen() {
             <Text style={typo.heading}>{data?.quote}</Text>
           </View>
           <View style={styles.authorContainer}>
-            <Text style={[typo.small, { fontSize: 18 }]}>
-              - {data?.author || placeholderQuote.author}
-            </Text>
+            <Text style={[typo.small, { fontSize: 18 }]}>- {data?.author}</Text>
           </View>
         </>
       );

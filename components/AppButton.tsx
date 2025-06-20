@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { useTheme } from "../hooks/ThemeProvider";
 
-type AppButtonPros = {
+type AppButtonProps = {
   title: string;
   onPress?: () => void;
   isLoading?: boolean;
@@ -23,7 +23,7 @@ export default function AppButton({
   onPress,
   isLoading,
   isDisabled = false,
-}: AppButtonPros) {
+}: AppButtonProps) {
   const [color, typo] = useTheme();
   const buttonStyle: ViewStyle = {
     ...styles.button,
