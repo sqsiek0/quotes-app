@@ -27,6 +27,15 @@ describe("Check if custom functions is working", () => {
       expect(getByTestId("heart-icon")).toBeTruthy();
     });
 
+    test("renders List icon for 'Quotes' route", () => {
+      const Icon = createTabBarIcon("Quotes");
+
+      const { getByTestId } = render(
+        <Icon focused={true} color="black" size={24} />,
+      );
+      expect(getByTestId("quotes-icon")).toBeTruthy();
+    });
+
     test("returns null for unknown route", () => {
       const Icon = createTabBarIcon("unknown");
       const { toJSON } = render(<Icon focused={true} color="red" size={24} />);
