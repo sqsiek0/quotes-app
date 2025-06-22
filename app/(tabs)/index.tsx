@@ -8,58 +8,48 @@ export default function HomeScreen() {
   const { data, isFetching, isLoading, isError, error, refetch } =
     useRandomQuote();
 
-  function quoteView() {
-    if (isError) {
-      return (
-        <View style={styles.errorContainer} testID="home-screen-error">
-          <Text
-            style={[
-              typo.body,
-              { color: colorTheme.danger, textAlign: "center" },
-            ]}
-          >
-            Error: {error.message}
-          </Text>
-          <View style={styles.errorButtonContainer}>
-            <AppButton
-              title={"Retry"}
-              onPress={refetch}
-              isLoading={isFetching}
-            ></AppButton>
-          </View>
-        </View>
-      );
-    }
-    if (data) {
-      return (
-        <>
-          <View style={styles.quoteContainer}>
-            <Text style={typo.heading}>{data?.quote}</Text>
-          </View>
-          <View style={styles.authorContainer}>
-            <Text style={[typo.small, { fontSize: 18 }]}>- {data?.author}</Text>
-          </View>
-        </>
-      );
-    }
-  }
-
   function handleInitialLoad() {
-    if (isLoading) {
-      return (
-        <View style={styles.loaderContainer} testID="home-screen-initial-load">
-          <ActivityIndicator />
-        </View>
-      );
-    } else {
-      return quoteView();
-    }
+    return (
+      <View style={styles.loaderContainer} testID="home-screen-initial-load">
+        <ActivityIndicator />
+      </View>
+    );
   }
 
-  function renderButtonsRow(isLoading: boolean, isError: boolean) {
-    if (isLoading || isError) {
-      return null;
-    }
+  function handleError() {
+    return (
+      <View style={styles.errorContainer} testID="home-screen-error">
+        <Text
+          style={[typo.body, { color: colorTheme.danger, textAlign: "center" }]}
+        >
+          Error: {error?.message}
+        </Text>
+        <View style={styles.errorButtonContainer}>
+          <AppButton
+            title={"Retry"}
+            onPress={refetch}
+            isLoading={isFetching}
+          ></AppButton>
+        </View>
+      </View>
+    );
+  }
+
+  function handleQuoteView() {
+    return (
+      <>
+        <View style={styles.quoteContainer}>
+          <Text style={typo.heading}>{data?.quote}</Text>
+        </View>
+        <View style={styles.authorContainer}>
+          <Text style={[typo.small, { fontSize: 18 }]}>- {data?.author}</Text>
+        </View>
+        {renderButtonsRow()}
+      </>
+    );
+  }
+
+  function renderButtonsRow() {
     return (
       <View style={styles.buttonRow}>
         <View style={styles.buttonWrapper}>
@@ -76,13 +66,25 @@ export default function HomeScreen() {
     );
   }
 
+  function renderContent() {
+    if (isLoading) {
+      return handleInitialLoad();
+    }
+    if (isError) {
+      return handleError();
+    }
+    if (data) {
+      return handleQuoteView();
+    }
+    return null;
+  }
+
   return (
     <View
       testID="home-screen-view"
       style={[styles.container, { backgroundColor: colorTheme.background }]}
     >
-      {handleInitialLoad()}
-      {renderButtonsRow(isLoading, isError)}
+      {renderContent()}
     </View>
   );
 }

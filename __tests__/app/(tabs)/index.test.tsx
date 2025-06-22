@@ -115,6 +115,8 @@ describe("index screen - home tab", () => {
     expect(retryButton).toBeTruthy();
     expect(queryByText("New quote")).toBeNull();
     expect(queryByText("Add to favourite")).toBeNull();
+
+    //TODO: Add functionality to retry button
   });
 
   test("renders quote view", async () => {
