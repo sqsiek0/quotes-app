@@ -10,6 +10,7 @@ import {
   ViewStyle,
 } from "react-native";
 import { useTheme } from "../../hooks/ThemeProvider";
+import { useRouter } from "expo-router";
 
 type CustomTabBarButtonProps = {
   children: ReactNode;
@@ -18,7 +19,7 @@ type CustomTabBarButtonProps = {
 };
 
 export function createTabBarIcon(
-  routeName: string,
+  routeName: string
 ): (props: {
   focused: boolean;
   color: string;
@@ -73,6 +74,7 @@ export function CustomTabBarButton({
 
 export default function TabLayout() {
   const [colors, typo] = useTheme();
+  const router = useRouter();
 
   return (
     <Tabs
@@ -123,6 +125,15 @@ export default function TabLayout() {
         name="Quotes"
         options={{
           title: "Quotes list",
+          tabBarLabel: "Quotes",
+          headerTitle: "Quotes",
+          headerSearchBarOptions: {
+            placeholder: "Search quotes",
+            onChangeText: (e) => {
+              let searchQuery = e.nativeEvent.text;
+              router.setParams({ search: searchQuery });
+            },
+          },
         }}
       ></Tabs.Screen>
       <Tabs.Screen
