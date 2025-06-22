@@ -115,8 +115,32 @@ describe("index screen - home tab", () => {
     expect(retryButton).toBeTruthy();
     expect(queryByText("New quote")).toBeNull();
     expect(queryByText("Add to favourite")).toBeNull();
+  });
 
-    //TODO: Add functionality to retry button
+  test("click on retry button", () => {
+    const mockError = new Error("Network error");
+    const mockRefetch: (
+      options?: RefetchOptions
+    ) => Promise<QueryObserverResult<QuoteResponse, Error>> = jest.fn(
+      () => new Promise(() => {})
+    );
+
+    const mockResult: Partial<UseQueryResult<QuoteResponse, Error>> = {
+      data: undefined,
+      isLoading: false,
+      isFetching: false,
+      isError: true,
+      error: mockError,
+      refetch: mockRefetch,
+    };
+    givenUseRandomQuote(mockResult);
+
+    const { getByText } = renderHome();
+
+    const retryButton = getByText("Retry");
+
+    fireEvent.press(retryButton);
+    expect(mockRefetch).toHaveBeenCalled();
   });
 
   test("renders quote view", async () => {
