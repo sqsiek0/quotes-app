@@ -1,141 +1,76 @@
 import { Tabs } from "expo-router";
-import { Heart, House, List } from "lucide-react-native";
-import React, { ReactNode } from "react";
-import {
-  Platform,
-  StyleProp,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from "react-native";
+import React from "react";
 import { useTheme } from "../../hooks/ThemeProvider";
 import { useRouter } from "expo-router";
-
-type CustomTabBarButtonProps = {
-  children: ReactNode;
-  onPress: React.ComponentProps<typeof TouchableOpacity>["onPress"];
-  style: StyleProp<ViewStyle>;
-};
-
-export function createTabBarIcon(
-  routeName: string
-): (props: {
-  focused: boolean;
-  color: string;
-  size: number;
-}) => React.ReactElement | null {
-  return ({ focused, color, size }) => {
-    switch (routeName) {
-      case "index":
-        return (
-          <View testID="house-icon">
-            <House color={color} size={size} />
-          </View>
-        );
-      case "Favorites":
-        return (
-          <View testID="heart-icon">
-            <Heart color={color} size={size} />
-          </View>
-        );
-      case "Quotes":
-        return (
-          <View testID="quotes-icon">
-            <List color={color} size={size} />
-          </View>
-        );
-
-      default:
-        return null;
-    }
-  };
-}
-
-export function CustomTabBarButton({
-  children,
-  onPress,
-  style,
-}: CustomTabBarButtonProps) {
-  if (Platform.OS === "android") {
-    return (
-      <TouchableNativeFeedback onPress={onPress}>
-        <View style={style}>{children}</View>
-      </TouchableNativeFeedback>
-    );
-  } else {
-    return (
-      <TouchableOpacity onPress={onPress} style={style}>
-        {children}
-      </TouchableOpacity>
-    );
-  }
-}
+import AppThemeSwitcher from "../../components/AppThemeSwitcher";
+import type { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
+import { CustomTabBarButton } from "../../components/(tabs)/_layout/CustomTabBarButton";
+import { createTabBarIcon } from "../../components/(tabs)/_layout/createTabBarIcon";
 
 export default function TabLayout() {
   const [colors, typo] = useTheme();
   const router = useRouter();
 
-  return (
-    <Tabs
-      screenOptions={({ route }) => ({
-        tabBarIcon: createTabBarIcon(route.name),
-        tabBarActiveTintColor: colors.accent,
-        tabBarInactiveTintColor: colors.secondaryText,
-        tabBarStyle: {
-          backgroundColor: colors.card,
-          borderTopColor: colors.border,
-          borderTopWidth: 1,
-        },
-        headerTitleAlign: "left",
-        headerShadowVisible: false,
-        headerStyle: {
-          backgroundColor: colors.card,
-          borderBottomColor: colors.border,
-          borderBottomWidth: 1,
-        },
-        headerTintColor: colors.text,
-        headerTitleStyle: {
-          color: colors.text,
-          fontSize: typo.heading.fontSize,
-        },
+  const defaultScreenOptions = ({
+    route,
+  }: {
+    route: { name: string };
+  }): BottomTabNavigationOptions => ({
+    tabBarIcon: createTabBarIcon(route.name),
+    tabBarActiveTintColor: colors.accent,
+    tabBarInactiveTintColor: colors.secondaryText,
+    tabBarStyle: {
+      backgroundColor: colors.card,
+      borderTopColor: colors.border,
+      borderTopWidth: 1,
+    },
+    headerTitleAlign: "left",
+    headerShadowVisible: false,
+    headerStyle: {
+      backgroundColor: colors.card,
+      borderBottomColor: colors.border,
+      borderBottomWidth: 1,
+    },
+    headerTintColor: colors.text,
+    headerTitleStyle: {
+      color: colors.text,
+      fontSize: typo.heading.fontSize,
+    },
+    headerRight: () => <AppThemeSwitcher />,
+    tabBarButton: (props) => (
+      <CustomTabBarButton onPress={props.onPress} style={props.style}>
+        {props.children}
+      </CustomTabBarButton>
+    ),
+  });
 
-        tabBarButton: (props) => {
-          return (
-            <CustomTabBarButton onPress={props.onPress} style={props.style}>
-              {props.children}
-            </CustomTabBarButton>
-          );
-        },
-      })}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Random quote",
-          tabBarLabel: "Home",
-          headerTitle: "Your Daily Quote",
-          headerTitleAllowFontScaling: true,
-          headerTitleStyle: {
-            fontSize: typo.heading.fontSize,
-          },
-        }}
-      />
-      <Tabs.Screen
-        name="Quotes"
-        options={{
-          title: "Quotes list",
-          tabBarLabel: "Quotes",
-          headerTitle: "Quotes",
-          headerSearchBarOptions: {
-            placeholder: "Search quotes",
-            onChangeText: (e) => {
-              let searchQuery = e.nativeEvent.text;
-              router.setParams({ search: searchQuery });
-            },
-          },
-        }}
-      ></Tabs.Screen>
+  const quotesScreenOptions: BottomTabNavigationOptions = {
+    title: "Quotes list",
+    tabBarLabel: "Quotes",
+    headerTitle: "Quotes",
+    headerRight: () => null,
+    headerSearchBarOptions: {
+      placeholder: "Search quotes",
+      onChangeText: (e) => {
+        const searchQuery = e.nativeEvent.text;
+        router.setParams({ search: searchQuery });
+      },
+    },
+  };
+  const homeScreenOptions: BottomTabNavigationOptions = {
+    title: "Home",
+    tabBarLabel: "Home",
+    headerTitle: "Home",
+    headerTitleAllowFontScaling: true,
+    headerTitleStyle: {
+      fontSize: typo.heading.fontSize,
+    },
+  };
+
+  return (
+    <Tabs screenOptions={defaultScreenOptions}>
+      <Tabs.Screen name="index" options={homeScreenOptions} />
+      <Tabs.Screen name="Quotes" options={quotesScreenOptions} />
       <Tabs.Screen
         name="Favorites"
         options={{
