@@ -6,9 +6,10 @@ import AppThemeSwitcher from "../../components/AppThemeSwitcher";
 import type { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
 import { CustomTabBarButton } from "../../components/(tabs)/_layout/CustomTabBarButton";
 import { createTabBarIcon } from "../../components/(tabs)/_layout/createTabBarIcon";
+import { StatusBar } from "expo-status-bar";
 
 export default function TabLayout() {
-  const [colors, typo] = useTheme();
+  const [colors, typo, _, mode] = useTheme();
   const router = useRouter();
 
   const defaultScreenOptions = ({
@@ -68,15 +69,18 @@ export default function TabLayout() {
   };
 
   return (
-    <Tabs screenOptions={defaultScreenOptions}>
-      <Tabs.Screen name="index" options={homeScreenOptions} />
-      <Tabs.Screen name="Quotes" options={quotesScreenOptions} />
-      <Tabs.Screen
-        name="Favorites"
-        options={{
-          title: "Favorites",
-        }}
-      />
-    </Tabs>
+    <>
+      <StatusBar style={mode === "dark" ? "light" : "dark"} />
+      <Tabs screenOptions={defaultScreenOptions}>
+        <Tabs.Screen name="index" options={homeScreenOptions} />
+        <Tabs.Screen name="Quotes" options={quotesScreenOptions} />
+        <Tabs.Screen
+          name="Favorites"
+          options={{
+            title: "Favorites",
+          }}
+        />
+      </Tabs>
+    </>
   );
 }

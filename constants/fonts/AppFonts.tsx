@@ -6,6 +6,12 @@ export const typographyDark: ThemeModelTypography = {
     fontWeight: "bold",
     color: "#FFFFFF",
   },
+  headerBody: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#D1D1D6",
+  },
+
   body: {
     fontSize: 16,
     fontWeight: "400",
@@ -26,6 +32,11 @@ export const typographyDark: ThemeModelTypography = {
 export const typographyLight: ThemeModelTypography = {
   heading: {
     fontSize: 24,
+    fontWeight: "bold",
+    color: "#1C1C1E",
+  },
+  headerBody: {
+    fontSize: 20,
     fontWeight: "bold",
     color: "#1C1C1E",
   },
