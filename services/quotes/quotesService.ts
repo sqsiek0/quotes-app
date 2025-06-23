@@ -20,7 +20,9 @@ export async function fetchListQuotes(
   limit = 30,
   skip = 0,
 ): Promise<QuoteListResponse> {
-  const { data } = await apiClient.get<QuoteListResponse>(QUOTES_RANDOM, {
+  // throw new Error("fetchRandomQuote is not implemented yet");
+
+  const { data } = await apiClient.get<QuoteListResponse>('', {
     params: { limit, skip },
   }
 );
