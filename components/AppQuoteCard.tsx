@@ -1,0 +1,40 @@
+import { View, Text, StyleSheet } from "react-native";
+import { useTheme } from "../hooks/ThemeProvider";
+
+type AppQuoteCardProps = {
+  quote: string;
+  author: string;
+};
+
+export default function AppQuoteCard({ quote, author }: AppQuoteCardProps) {
+  const [colors, typo] = useTheme();
+
+  return (
+    <View
+      style={[
+        styles.itemContainer,
+        { backgroundColor: colors.card, borderColor: colors.border },
+      ]}
+    >
+      <Text style={typo.headerBody}>{quote}</Text>
+      <Text
+        style={[
+          typo.small,
+          {
+            textAlign: "right",
+          },
+        ]}
+      >
+        - {author}
+      </Text>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  itemContainer: {
+    padding: 12,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+});

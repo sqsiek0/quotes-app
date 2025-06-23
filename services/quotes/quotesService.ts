@@ -22,6 +22,7 @@ export async function fetchListQuotes(
 ): Promise<QuoteListResponse> {
   const { data } = await apiClient.get<QuoteListResponse>(QUOTES_RANDOM, {
     params: { limit, skip },
-  });
+  }
+);
   return data;
 }
