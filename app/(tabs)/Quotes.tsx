@@ -7,11 +7,12 @@ import {
   RefreshControl,
   ActivityIndicator,
   Text,
-  Pressable,
 } from "react-native";
 import { useTheme } from "../../hooks/ThemeProvider";
 import AppQuoteCard from "../../components/AppQuoteCard";
 import { useListQuotes } from "../../hooks/quotes/useListQuotes";
+import { QuotesLoadingView } from "../../components/(tabs)/Quotes/QuotesLoadingView";
+import { QuotesFailedView } from "../../components/(tabs)/Quotes/QuotesFailedView";
 
 export default function Quotes() {
   const { search } = useLocalSearchParams<{
@@ -38,31 +39,26 @@ export default function Quotes() {
     setTimeout(() => setRefreshing(false), 500);
   }, [refetch]);
 
-  if (isLoading) {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator />
-      </View>
-    );
+  function renderContent() {
+    if (isLoading) {
+      return <QuotesLoadingView />;
+    }
+
+    if (isError) {
+      return (
+        <QuotesFailedView
+          error={error}
+          refetch={refetch}
+          isRefetching={isRefetching}
+        />
+      );
+    }
+
+    return handleSuccess();
   }
 
-  if (isError) {
+  function handleSuccess() {
     return (
-      <View style={[styles.container, { backgroundColor: colors.background }]}>
-        <Text
-          style={[typo.heading, { color: colors.danger, textAlign: "center" }]}
-        >
-          Error: {error?.message}
-        </Text>
-        <Pressable onPress={() => refetch()} style={styles.retryButton}>
-          <Text>Try again</Text>
-        </Pressable>
-      </View>
-    );
-  }
-
-  return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
       <FlatList
         data={data?.pages.flatMap((page) => page.quotes) || []}
         keyExtractor={(item) => item.id.toString()}
@@ -84,19 +80,11 @@ export default function Quotes() {
           />
         }
         ItemSeparatorComponent={() => <View style={styles.separator} />}
-        ListFooterComponent={() =>
-          isFetchingNextPage ? (
-            <View style={styles.footer}>
-              <ActivityIndicator />
-              <Text>Loading more...</Text>
-            </View>
-          ) : null
-        }
-        ListEmptyComponent={() => (
-          <View style={styles.emptyContainer}>
-            <Text>No quotes found</Text>
-          </View>
-        )}
+        ListFooterComponent={ListFooterComponent}
+        ListEmptyComponent={ListEmptyComponent}
+        contentContainerStyle={{
+          flexGrow: 1,
+        }}
         ListFooterComponentStyle={{
           padding: 16,
           alignItems: "center",
@@ -106,6 +94,39 @@ export default function Quotes() {
           return <AppQuoteCard quote={item.quote} author={item.author} />;
         }}
       />
+    );
+  }
+
+  function ListFooterComponent() {
+    if (isFetchingNextPage) {
+      return (
+        <View style={styles.footer}>
+          <ActivityIndicator />
+          <Text
+            style={[
+              typo.body,
+              { color: colors.text, marginTop: 4, textAlign: "center" },
+            ]}
+          >
+            Loading more...
+          </Text>
+        </View>
+      );
+    }
+    return null;
+  }
+
+  function ListEmptyComponent() {
+    return (
+      <View style={styles.emptyContainer}>
+        <Text style={[typo.body, { color: colors.text }]}>No quotes found</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={[styles.container, { backgroundColor: colors.background }]}>
+      {renderContent()}
     </View>
   );
 }
@@ -121,7 +142,6 @@ const styles = StyleSheet.create({
     marginTop: 16,
     alignSelf: "center",
     padding: 8,
-    // backgroundColor: colors.accent,
     borderRadius: 4,
   },
   footer: {
@@ -132,6 +152,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    padding: 16,
   },
 });

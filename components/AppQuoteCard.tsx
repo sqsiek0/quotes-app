@@ -22,6 +22,7 @@ export default function AppQuoteCard({ quote, author }: AppQuoteCardProps) {
           typo.small,
           {
             textAlign: "right",
+            marginTop: 8,
           },
         ]}
       >

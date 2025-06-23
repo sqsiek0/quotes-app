@@ -19,7 +19,8 @@
     "lucide-react-native": "^0.515.0",
     "react": "19.0.0",
     "react-native": "0.79.3",
-    "react-native-url-polyfill": "^2.0.0"
+    "react-native-url-polyfill": "^2.0.0",
+    "use-debounce": "^10.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
