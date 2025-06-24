@@ -16,7 +16,7 @@ export function QuotesFailedView({
   const [colors, typo] = useTheme();
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="quotes-failed-view">
       <Text style={[typo.body, { color: colors.danger, textAlign: "center" }]}>
         Error: {error?.message}
       </Text>

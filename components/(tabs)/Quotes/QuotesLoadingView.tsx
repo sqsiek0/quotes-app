@@ -2,7 +2,7 @@ import { ActivityIndicator, StyleSheet, View } from "react-native";
 
 export function QuotesLoadingView() {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="quotes-loading-view">
       <ActivityIndicator />
     </View>
   );

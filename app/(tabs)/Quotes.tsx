@@ -76,6 +76,7 @@ export default function Quotes() {
   function handleSuccess() {
     return (
       <FlatList
+        testID="quotes-list"
         data={filteredQuotes}
         keyExtractor={(item) => item.id.toString()}
         indicatorStyle={mode === "dark" ? "white" : "black"}
@@ -90,6 +91,7 @@ export default function Quotes() {
         }}
         refreshControl={
           <RefreshControl
+            testID="quotes-refresh-control"
             refreshing={isRefetching || refreshing}
             onRefresh={onRefresh}
             tintColor={colors.text}
@@ -116,7 +118,7 @@ export default function Quotes() {
   function ListFooterComponent() {
     if (isFetchingNextPage) {
       return (
-        <View style={styles.footer}>
+        <View style={styles.footer} testID="quotes-list-footer">
           <ActivityIndicator />
           <Text
             style={[
@@ -141,7 +143,10 @@ export default function Quotes() {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <View
+      testID="quotes-screen"
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       {renderContent()}
     </View>
   );
