@@ -28,11 +28,14 @@ export default function AppThemeSwitcher() {
 
   return (
     <Pressable onPress={toggleTheme}>
-      <Animated.View style={{ marginRight: 16, transform: [{ rotate: spin }] }}>
+      <Animated.View
+        testID={"app-theme-switcher"}
+        style={{ marginRight: 16, transform: [{ rotate: spin }] }}
+      >
         {mode === "dark" ? (
-          <Moon color={colors.text} size={24} />
+          <Moon testID="theme-switcher-moon" color={colors.text} size={24} />
         ) : (
-          <Sun color={colors.text} size={24} />
+          <Sun testID="theme-switcher-sun" color={colors.text} size={24} />
         )}
       </Animated.View>
     </Pressable>
