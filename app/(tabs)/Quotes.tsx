@@ -1,5 +1,5 @@
-import { useLocalSearchParams } from "expo-router";
-import React, { useState, useCallback } from "react";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import React, { useState, useCallback, useMemo } from "react";
 import {
   View,
   FlatList,
@@ -18,6 +18,7 @@ export default function Quotes() {
   const { search } = useLocalSearchParams<{
     search?: string;
   }>();
+
   const [colors, typo, _, mode] = useTheme();
   const {
     data,
@@ -32,6 +33,21 @@ export default function Quotes() {
   } = useListQuotes();
 
   const [refreshing, setRefreshing] = useState(false);
+
+  const filteredQuotes = useMemo(() => {
+    const allQuotes = data?.pages.flatMap((page) => page.quotes) || [];
+
+    if (!search || search.trim() === "") {
+      return allQuotes;
+    }
+
+    const searchTerm = search.toLowerCase().trim();
+    return allQuotes.filter(
+      (quote) =>
+        quote.quote.toLowerCase().includes(searchTerm) ||
+        quote.author.toLowerCase().includes(searchTerm)
+    );
+  }, [data, search]);
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
@@ -60,7 +76,7 @@ export default function Quotes() {
   function handleSuccess() {
     return (
       <FlatList
-        data={data?.pages.flatMap((page) => page.quotes) || []}
+        data={filteredQuotes}
         keyExtractor={(item) => item.id.toString()}
         indicatorStyle={mode === "dark" ? "white" : "black"}
         initialNumToRender={10}

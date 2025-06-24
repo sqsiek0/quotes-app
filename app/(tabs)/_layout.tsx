@@ -7,10 +7,14 @@ import type { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
 import { CustomTabBarButton } from "../../components/(tabs)/_layout/CustomTabBarButton";
 import { createTabBarIcon } from "../../components/(tabs)/_layout/createTabBarIcon";
 import { StatusBar } from "expo-status-bar";
+import { useDebounce, useDebouncedCallback } from "use-debounce";
 
 export default function TabLayout() {
   const [colors, typo, _, mode] = useTheme();
   const router = useRouter();
+  const debounced = useDebouncedCallback((value: string) => {
+    router.setParams({ search: value || "" });
+  }, 500);
 
   const defaultScreenOptions = ({
     route,
@@ -53,8 +57,10 @@ export default function TabLayout() {
     headerSearchBarOptions: {
       placeholder: "Search quotes",
       onChangeText: (e) => {
-        const searchQuery = e.nativeEvent.text;
-        router.setParams({ search: searchQuery });
+        debounced(e.nativeEvent.text);
+      },
+      onClose: () => {
+        debounced("");
       },
     },
   };

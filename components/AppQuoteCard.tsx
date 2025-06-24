@@ -16,8 +16,11 @@ export default function AppQuoteCard({ quote, author }: AppQuoteCardProps) {
         { backgroundColor: colors.card, borderColor: colors.border },
       ]}
     >
-      <Text style={typo.headerBody}>{quote}</Text>
+      <Text testID="quote-text" style={typo.headerBody}>
+        {quote}
+      </Text>
       <Text
+        testID="quote-author"
         style={[
           typo.small,
           {
