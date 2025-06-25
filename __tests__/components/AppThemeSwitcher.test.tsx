@@ -1,6 +1,6 @@
 import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import AppThemeSwitcher from "../../components/AppThemeSwitcher";
-import { ThemeProvider, useTheme } from "../../hooks/ThemeProvider";
+import { ThemeProvider, useTheme } from "../../hooks/useTheme";
 
 const wrapper = ({ children }: { children: React.ReactNode }) => (
   <ThemeProvider>{children}</ThemeProvider>

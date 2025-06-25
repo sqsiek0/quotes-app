@@ -1,6 +1,6 @@
 import { Tabs } from "expo-router";
 import React from "react";
-import { useTheme } from "../../hooks/ThemeProvider";
+import { useTheme } from "../../hooks/useTheme";
 import { useRouter } from "expo-router";
 import AppThemeSwitcher from "../../components/AppThemeSwitcher";
 import type { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";

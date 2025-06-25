@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import AppButton from "../../components/AppButton";
-import { ThemeProvider } from "../../hooks/ThemeProvider";
+import { ThemeProvider } from "../../hooks/useTheme";
 import { PropsWithChildren } from "react";
 import { Platform } from "react-native";
 
@@ -16,7 +16,7 @@ describe("AppButton", () => {
     const { getByTestId, getByText } = render(
       wrapper({
         children: <AppButton title="Click Me" onPress={jest.fn()} />,
-      }),
+      })
     );
 
     expect(getByTestId("app-button-pressable")).toBeTruthy();
@@ -28,7 +28,7 @@ describe("AppButton", () => {
     const { getByTestId } = render(
       wrapper({
         children: <AppButton title="Click Me" onPress={mockOnPress} />,
-      }),
+      })
     );
 
     const button = getByTestId("app-button-pressable");
@@ -53,7 +53,7 @@ describe("AppButton", () => {
       const { getByTestId } = render(
         wrapper({
           children: <AppButton title="Android Button" onPress={jest.fn()} />,
-        }),
+        })
       );
 
       expect(getByTestId("app-button-pressable")).toBeTruthy();
@@ -67,7 +67,7 @@ describe("AppButton", () => {
       const { getByTestId } = render(
         wrapper({
           children: <AppButton title="iOS Button" onPress={jest.fn()} />,
-        }),
+        })
       );
 
       expect(getByTestId("app-button-pressable")).toBeTruthy();

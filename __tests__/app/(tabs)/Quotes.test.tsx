@@ -3,7 +3,7 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { ThemeProvider } from "../../../hooks/ThemeProvider";
+import { ThemeProvider } from "../../../hooks/useTheme";
 import Quotes from "../../../app/(tabs)/Quotes";
 import { act, fireEvent, render } from "@testing-library/react-native";
 import { useListQuotes } from "../../../hooks/quotes/useListQuotes";

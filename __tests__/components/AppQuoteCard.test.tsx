@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react-native";
 import AppQuoteCard from "../../components/AppQuoteCard";
-import { ThemeProvider } from "../../hooks/ThemeProvider";
+import { ThemeProvider } from "../../hooks/useTheme";
 
 describe("AppQuoteCard", () => {
   test("renders quote and author correctly", () => {

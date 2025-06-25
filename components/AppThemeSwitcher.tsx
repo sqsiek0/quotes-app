@@ -1,7 +1,7 @@
 import { Moon, Sun } from "lucide-react-native";
 import { Pressable, Animated } from "react-native";
 import React, { useEffect, useRef } from "react";
-import { useTheme } from "../hooks/ThemeProvider";
+import { useTheme } from "../hooks/useTheme";
 
 export default function AppThemeSwitcher() {
   const [colors, _, toggleTheme, mode] = useTheme();

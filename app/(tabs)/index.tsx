@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
-import { useTheme } from "../../hooks/ThemeProvider";
+import { useTheme } from "../../hooks/useTheme";
 import AppButton from "../../components/AppButton";
 import { useRandomQuote } from "../../hooks/quotes/useRandomQuote";
 

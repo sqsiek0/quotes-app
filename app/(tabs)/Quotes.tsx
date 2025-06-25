@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
   Text,
 } from "react-native";
-import { useTheme } from "../../hooks/ThemeProvider";
+import { useTheme } from "../../hooks/useTheme";
 import AppQuoteCard from "../../components/AppQuoteCard";
 import { useListQuotes } from "../../hooks/quotes/useListQuotes";
 import { QuotesLoadingView } from "../../components/(tabs)/Quotes/QuotesLoadingView";

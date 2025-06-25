@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
-import { useTheme } from "../hooks/ThemeProvider";
+import { useTheme } from "../hooks/useTheme";
 
 type AppQuoteCardProps = {
   quote: string;
