@@ -7,7 +7,7 @@ import type { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
 import { CustomTabBarButton } from "../../components/(tabs)/_layout/CustomTabBarButton";
 import { createTabBarIcon } from "../../components/(tabs)/_layout/createTabBarIcon";
 import { StatusBar } from "expo-status-bar";
-import { useDebounce, useDebouncedCallback } from "use-debounce";
+import { useDebouncedCallback } from "use-debounce";
 
 export default function TabLayout() {
   const [colors, typo, _, mode] = useTheme();
@@ -81,9 +81,9 @@ export default function TabLayout() {
         <Tabs.Screen name="index" options={homeScreenOptions} />
         <Tabs.Screen name="Quotes" options={quotesScreenOptions} />
         <Tabs.Screen
-          name="Favorites"
+          name="Favourite"
           options={{
-            title: "Favorites",
+            title: "Favourites",
           }}
         />
       </Tabs>

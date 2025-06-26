@@ -11,16 +11,16 @@ describe("Check if custom functions is working", () => {
       const Icon = createTabBarIcon("index");
 
       const { getByTestId } = render(
-        <Icon focused={true} color="black" size={24} />,
+        <Icon focused={true} color="black" size={24} />
       );
       expect(getByTestId("house-icon")).toBeTruthy();
     });
 
-    test("renders Heart icon for 'Favorites' route", () => {
-      const Icon = createTabBarIcon("Favorites");
+    test("renders Heart icon for 'Favourites' route", () => {
+      const Icon = createTabBarIcon("Favourites");
 
       const { getByTestId } = render(
-        <Icon focused={true} color="black" size={24} />,
+        <Icon focused={true} color="black" size={24} />
       );
       expect(getByTestId("heart-icon")).toBeTruthy();
     });
@@ -29,7 +29,7 @@ describe("Check if custom functions is working", () => {
       const Icon = createTabBarIcon("Quotes");
 
       const { getByTestId } = render(
-        <Icon focused={true} color="black" size={24} />,
+        <Icon focused={true} color="black" size={24} />
       );
       expect(getByTestId("quotes-icon")).toBeTruthy();
     });
@@ -58,7 +58,7 @@ describe("Check if custom functions is working", () => {
       const { getByText } = render(
         <CustomTabBarButton onPress={jest.fn()} style={{}}>
           <Text>Click me</Text>
-        </CustomTabBarButton>,
+        </CustomTabBarButton>
       );
 
       expect(getByText("Click me")).toBeTruthy();
@@ -72,7 +72,7 @@ describe("Check if custom functions is working", () => {
       const { getByText } = render(
         <CustomTabBarButton onPress={jest.fn()} style={{}}>
           <Text>Click me</Text>
-        </CustomTabBarButton>,
+        </CustomTabBarButton>
       );
 
       expect(getByText("Click me")).toBeTruthy();
@@ -88,7 +88,7 @@ describe("Check if custom functions is working", () => {
       const { getByText } = render(
         <CustomTabBarButton onPress={handlePress} style={{}}>
           <Text>Click me</Text>
-        </CustomTabBarButton>,
+        </CustomTabBarButton>
       );
 
       fireEvent.press(getByText("Click me"));
