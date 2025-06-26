@@ -11,7 +11,7 @@ import {
   ViewStyle,
   TextStyle,
 } from "react-native";
-import { useTheme } from "../hooks/ThemeProvider";
+import { useTheme } from "../hooks/useTheme";
 
 type AppButtonProps = {
   title: string;

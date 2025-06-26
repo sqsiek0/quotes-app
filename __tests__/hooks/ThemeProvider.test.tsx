@@ -1,5 +1,5 @@
 import { renderHook } from "@testing-library/react-native";
-import { ThemeProvider, useTheme } from "../../hooks/ThemeProvider";
+import { ThemeProvider, useTheme } from "../../hooks/useTheme";
 import { act } from "react";
 
 describe("Tests for ThemeProvider", () => {

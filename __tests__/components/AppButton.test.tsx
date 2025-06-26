@@ -1,6 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import AppButton from "../../components/AppButton";
-import { ThemeProvider } from "../../hooks/ThemeProvider";
+import { ThemeProvider } from "../../hooks/useTheme";
 import { PropsWithChildren } from "react";
 import { Platform } from "react-native";
 

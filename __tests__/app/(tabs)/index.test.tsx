@@ -8,7 +8,7 @@ jest.mock("../../../hooks/quotes/useRandomQuote", () => ({
 
 import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import HomeScreen from "../../../app/(tabs)";
-import { ThemeProvider } from "../../../hooks/ThemeProvider";
+import { ThemeProvider } from "../../../hooks/useTheme";
 import { PropsWithChildren } from "react";
 import {
   QueryClient,

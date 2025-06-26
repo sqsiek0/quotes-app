@@ -20,6 +20,7 @@ export interface ThemeModelColors {
 
 export interface ThemeModelTypography {
   heading: TextStyle;
+  headerBody: TextStyle;
   body: TextStyle;
   small: TextStyle;
   button: TextStyle;

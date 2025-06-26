@@ -1,11 +1,9 @@
 import React from "react";
 import { fireEvent, render } from "@testing-library/react-native";
-import {
-  createTabBarIcon,
-  CustomTabBarButton,
-} from "../../../app/(tabs)/_layout";
 import { Platform } from "react-native";
 import { Text } from "react-native";
+import { createTabBarIcon } from "../../../components/(tabs)/_layout/createTabBarIcon";
+import { CustomTabBarButton } from "../../../components/(tabs)/_layout/CustomTabBarButton";
 
 describe("Check if custom functions is working", () => {
   describe("createTabBarIcon", () => {

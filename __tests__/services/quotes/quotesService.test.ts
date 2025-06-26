@@ -43,7 +43,7 @@ describe("quotesService", () => {
   });
 
   test("fetchListQuotes should return a list of quotes", async () => {
-    mockedClient.onGet(QUOTES_RANDOM).reply(200, mockListResponse);
+    mockedClient.onGet().reply(200, mockListResponse);
 
     const response = await fetchListQuotes();
     expect(response).toEqual(mockListResponse);
