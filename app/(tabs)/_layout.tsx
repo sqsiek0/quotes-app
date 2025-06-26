@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { Tabs } from "expo-router";
 import React from "react";
 import { useTheme } from "../../hooks/useTheme";

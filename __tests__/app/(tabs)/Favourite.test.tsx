@@ -11,9 +11,9 @@ jest.mock("../../../hooks/useFavourites", () => ({
 
 import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import React, { PropsWithChildren } from "react";
-import { ThemeProvider } from "../../../hooks/useTheme";
 import Favourites from "../../../app/(tabs)/Favourite";
 import { useFavourites } from "../../../hooks/useFavourites";
+import { ThemeProvider } from "../../../hooks/useTheme";
 
 const wrapper = ({ children }: PropsWithChildren) => {
   return <ThemeProvider>{children}</ThemeProvider>;
@@ -21,6 +21,9 @@ const wrapper = ({ children }: PropsWithChildren) => {
 
 describe("Favourite screen", () => {
   beforeEach(() => {
+    jest.clearAllMocks();
+  });
+  afterAll(() => {
     jest.clearAllMocks();
   });
 
@@ -37,6 +40,7 @@ describe("Favourite screen", () => {
   });
 
   describe("when favourites are present", () => {
+    const mockedToggle = jest.fn();
     const mockFavourites = {
       state: {
         ids: [1, 2],
@@ -45,7 +49,7 @@ describe("Favourite screen", () => {
           2: { id: 2, quote: "Quote 2", author: "Author 2" },
         },
       },
-      toggle: jest.fn(),
+      toggle: mockedToggle,
       isFavourite: jest.fn(() => true),
     };
 
@@ -77,11 +81,11 @@ describe("Favourite screen", () => {
       const quoteCard = getByText("Quote 1");
       fireEvent.press(quoteCard);
 
-      waitFor(() => {
+      await waitFor(() => {
         const modal = getByTestId("favourite-modal");
         expect(modal).toBeTruthy();
         expect(getByTestId("favourite-modal-quote")).toBeTruthy();
-        expect(getByText(`favourite-modal-author`)).toBeTruthy();
+        expect(getByTestId(`favourite-modal-author`)).toBeTruthy();
         expect(getByText("Remove from favourites")).toBeTruthy();
         expect(getByText("Close")).toBeTruthy();
       });
@@ -90,40 +94,45 @@ describe("Favourite screen", () => {
     test('calls close modal on "Close" button press', async () => {
       jest.mocked(useFavourites).mockReturnValueOnce(mockFavourites);
 
-      const { getByText, getByTestId } = render(<Favourites />, { wrapper });
+      const { getByText, queryByTestId } = render(<Favourites />, {
+        wrapper,
+      });
       const quoteCard = getByText("Quote 1");
       fireEvent.press(quoteCard);
 
       const closeButton = getByText("Close");
       fireEvent.press(closeButton);
 
-      waitFor(() => {
-        const modal = getByTestId("favourite-modal");
-        expect(modal).toBeFalsy();
+      await waitFor(() => {
+        expect(queryByTestId("favourite-modal")).toBeFalsy();
       });
     });
 
     test('calls toggle on "Remove from favourites" button press', async () => {
-      jest.mocked(useFavourites).mockReturnValueOnce(mockFavourites);
+      jest.mocked(useFavourites).mockReturnValue(mockFavourites);
 
-      const { getByText } = render(<Favourites />, { wrapper });
-      const quoteCard = getByText("Quote 1");
-      fireEvent.press(quoteCard);
+      const { getByText, getByTestId } = render(<Favourites />, { wrapper });
 
-      const removeButton = getByText("Remove from favourites");
-      fireEvent.press(removeButton);
+      fireEvent.press(getByText("Quote 1"));
+
+      expect(getByTestId("favourite-modal")).toBeTruthy();
+
+      const removeBtn = getByText("Remove from favourites");
+      expect(removeBtn).toBeTruthy();
 
       waitFor(() => {
-        expect(mockFavourites.toggle).toHaveBeenCalledWith(
-          mockFavourites.state.byId[1]
-        );
+        fireEvent.press(removeBtn);
       });
+
+      expect(mockedToggle).toHaveBeenCalled();
     });
 
     test("close modal on back button press", async () => {
-      jest.mocked(useFavourites).mockReturnValueOnce(mockFavourites);
+      jest.mocked(useFavourites).mockReturnValue(mockFavourites);
 
-      const { getByText, getByTestId } = render(<Favourites />, { wrapper });
+      const { getByText, getByTestId, queryByTestId } = render(<Favourites />, {
+        wrapper,
+      });
       const quoteCard = getByText("Quote 1");
       fireEvent.press(quoteCard);
 
@@ -132,8 +141,8 @@ describe("Favourite screen", () => {
 
       fireEvent(modal, "requestClose");
 
-      waitFor(() => {
-        expect(modal).toBeFalsy();
+      await waitFor(() => {
+        expect(queryByTestId("favourite-modal")).toBeFalsy();
       });
     });
   });

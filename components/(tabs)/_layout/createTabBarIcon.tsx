@@ -2,7 +2,7 @@ import { Heart, House, List } from "lucide-react-native";
 import { View } from "react-native";
 
 export function createTabBarIcon(
-  routeName: string
+  routeName: string,
 ): (props: {
   focused: boolean;
   color: string;
