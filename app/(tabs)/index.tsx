@@ -2,11 +2,13 @@ import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { useTheme } from "../../hooks/useTheme";
 import AppButton from "../../components/AppButton";
 import { useRandomQuote } from "../../hooks/quotes/useRandomQuote";
+import { useFavourites } from "../../hooks/useFavourites";
 
 export default function HomeScreen() {
   const [colorTheme, typo] = useTheme();
   const { data, isFetching, isLoading, isError, error, refetch } =
     useRandomQuote();
+  const { toggle, isFavourite } = useFavourites();
 
   function handleInitialLoad() {
     return (
@@ -60,7 +62,24 @@ export default function HomeScreen() {
           />
         </View>
         <View style={styles.buttonWrapper}>
-          <AppButton title="Add to favourite" isDisabled={isFetching} />
+          <AppButton
+            title={
+              data && isFavourite(data.id)
+                ? "Remove from favs"
+                : "Add to favourite"
+            }
+            isDisabled={isFetching}
+            style={
+              data && isFavourite(data.id)
+                ? { backgroundColor: colorTheme.danger }
+                : {}
+            }
+            onPress={() => {
+              if (data) {
+                toggle(data);
+              }
+            }}
+          />
         </View>
       </View>
     );

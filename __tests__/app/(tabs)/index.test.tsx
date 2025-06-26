@@ -6,6 +6,17 @@ jest.mock("../../../hooks/quotes/useRandomQuote", () => ({
   useRandomQuote: jest.fn(() => new Promise(() => {})),
 }));
 
+jest.mock("../../../hooks/useFavourites", () => ({
+  StorageFavouritesProvider: ({ children }: { children: React.ReactNode }) => (
+    <>{children}</>
+  ),
+  useFavourites: jest.fn(() => ({
+    state: { ids: [], byId: {} },
+    toggle: jest.fn(),
+    isFavourite: jest.fn(() => false),
+  })),
+}));
+
 import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import HomeScreen from "../../../app/(tabs)";
 import { ThemeProvider } from "../../../hooks/useTheme";
@@ -20,6 +31,10 @@ import {
 import { useRandomQuote } from "../../../hooks/quotes/useRandomQuote";
 import { QuoteResponse } from "../../../types/Quotes";
 import { fetchRandomQuote } from "../../../services/quotes/quotesService";
+import {
+  StorageFavouritesProvider,
+  useFavourites,
+} from "../../../hooks/useFavourites";
 
 function givenUseRandomQuote(
   mock: Partial<UseQueryResult<QuoteResponse, Error>>,
@@ -49,9 +64,11 @@ beforeEach(() => {
 });
 
 const wrapper = ({ children }: PropsWithChildren<{}>) => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider>{children}</ThemeProvider>
-  </QueryClientProvider>
+  <StorageFavouritesProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>{children}</ThemeProvider>
+    </QueryClientProvider>
+  </StorageFavouritesProvider>
 );
 
 const renderHome = () => render(<HomeScreen />, { wrapper });

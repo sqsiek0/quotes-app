@@ -16,7 +16,7 @@ export function createTabBarIcon(
             <House color={color} size={size} />
           </View>
         );
-      case "Favorites":
+      case "Favourite":
         return (
           <View testID="heart-icon">
             <Heart color={color} size={size} />

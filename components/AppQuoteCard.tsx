@@ -1,37 +1,48 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useTheme } from "../hooks/useTheme";
 
 type AppQuoteCardProps = {
   quote: string;
   author: string;
+  onPress?: () => void;
 };
 
-export default function AppQuoteCard({ quote, author }: AppQuoteCardProps) {
+export default function AppQuoteCard({
+  quote,
+  author,
+  onPress,
+}: AppQuoteCardProps) {
   const [colors, typo] = useTheme();
 
   return (
-    <View
-      style={[
-        styles.itemContainer,
-        { backgroundColor: colors.card, borderColor: colors.border },
-      ]}
+    <Pressable
+      disabled={!onPress}
+      onPress={onPress}
+      style={({ pressed }) => [pressed && onPress && { opacity: 0.5 }]}
     >
-      <Text testID="quote-text" style={typo.headerBody}>
-        {quote}
-      </Text>
-      <Text
-        testID="quote-author"
+      <View
         style={[
-          typo.small,
-          {
-            textAlign: "right",
-            marginTop: 8,
-          },
+          styles.itemContainer,
+          { backgroundColor: colors.card, borderColor: colors.border },
         ]}
       >
-        - {author}
-      </Text>
-    </View>
+        <Text testID="quote-text" style={typo.headerBody}>
+          {quote}
+        </Text>
+        <Text
+          testID="quote-author"
+          style={[
+            typo.small,
+            {
+              textAlign: "right",
+              marginTop: 8,
+            },
+          ]}
+        >
+          - {author}
+        </Text>
+      </View>
+    </Pressable>
   );
 }
 

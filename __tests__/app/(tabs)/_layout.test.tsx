@@ -16,8 +16,8 @@ describe("Check if custom functions is working", () => {
       expect(getByTestId("house-icon")).toBeTruthy();
     });
 
-    test("renders Heart icon for 'Favorites' route", () => {
-      const Icon = createTabBarIcon("Favorites");
+    test("renders Heart icon for 'Favourite' route", () => {
+      const Icon = createTabBarIcon("Favourite");
 
       const { getByTestId } = render(
         <Icon focused={true} color="black" size={24} />,
