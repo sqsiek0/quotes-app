@@ -13,7 +13,10 @@ export default function Favourites() {
   const [colors, typo, _, mode] = useTheme();
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <View
+      testID="favourites-screen"
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
       <FlatList
         data={state.ids.map((id) => state.byId[id])}
         keyExtractor={(item) => item.id.toString()}

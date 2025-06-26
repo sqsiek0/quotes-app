@@ -20,6 +20,7 @@ export function FavouriteModal({
 
   return (
     <Modal
+      testID="favourite-modal"
       visible={modalVisible}
       transparent
       animationType="fade"
@@ -34,8 +35,11 @@ export function FavouriteModal({
             },
           ]}
         >
-          <Text style={[typo.heading]}>{selected?.quote}</Text>
+          <Text testID="favourite-modal-quote" style={[typo.heading]}>
+            {selected?.quote}
+          </Text>
           <Text
+            testID="favourite-modal-author"
             style={[
               typo.small,
               { marginBottom: 20, marginTop: 8, textAlign: "right" },

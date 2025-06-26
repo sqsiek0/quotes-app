@@ -6,6 +6,17 @@ jest.mock("../../../hooks/quotes/useRandomQuote", () => ({
   useRandomQuote: jest.fn(() => new Promise(() => {})),
 }));
 
+jest.mock("../../../hooks/useFavourites", () => ({
+  StorageFavouritesProvider: ({ children }: { children: React.ReactNode }) => (
+    <>{children}</>
+  ),
+  useFavourites: jest.fn(() => ({
+    state: { ids: [], byId: {} },
+    toggle: jest.fn(),
+    isFavourite: jest.fn(() => false),
+  })),
+}));
+
 import { fireEvent, render, waitFor } from "@testing-library/react-native";
 import HomeScreen from "../../../app/(tabs)";
 import { ThemeProvider } from "../../../hooks/useTheme";
@@ -20,9 +31,13 @@ import {
 import { useRandomQuote } from "../../../hooks/quotes/useRandomQuote";
 import { QuoteResponse } from "../../../types/Quotes";
 import { fetchRandomQuote } from "../../../services/quotes/quotesService";
+import {
+  StorageFavouritesProvider,
+  useFavourites,
+} from "../../../hooks/useFavourites";
 
 function givenUseRandomQuote(
-  mock: Partial<UseQueryResult<QuoteResponse, Error>>,
+  mock: Partial<UseQueryResult<QuoteResponse, Error>>
 ) {
   jest
     .mocked(useRandomQuote)
@@ -49,9 +64,11 @@ beforeEach(() => {
 });
 
 const wrapper = ({ children }: PropsWithChildren<{}>) => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider>{children}</ThemeProvider>
-  </QueryClientProvider>
+  <StorageFavouritesProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>{children}</ThemeProvider>
+    </QueryClientProvider>
+  </StorageFavouritesProvider>
 );
 
 const renderHome = () => render(<HomeScreen />, { wrapper });
@@ -120,9 +137,9 @@ describe("index screen - home tab", () => {
   test("click on retry button", () => {
     const mockError = new Error("Network error");
     const mockRefetch: (
-      options?: RefetchOptions,
+      options?: RefetchOptions
     ) => Promise<QueryObserverResult<QuoteResponse, Error>> = jest.fn(
-      () => new Promise(() => {}),
+      () => new Promise(() => {})
     );
 
     const mockResult: Partial<UseQueryResult<QuoteResponse, Error>> = {
@@ -173,9 +190,9 @@ describe("index screen - home tab", () => {
 
   test('refetches quote when "New quote" button is pressed', async () => {
     const mockRefetch: (
-      options?: RefetchOptions,
+      options?: RefetchOptions
     ) => Promise<QueryObserverResult<QuoteResponse, Error>> = jest.fn(
-      () => new Promise(() => {}),
+      () => new Promise(() => {})
     );
 
     givenUseRandomQuote({
