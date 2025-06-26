@@ -45,7 +45,7 @@ export default function Quotes() {
     return allQuotes.filter(
       (quote) =>
         quote.quote.toLowerCase().includes(searchTerm) ||
-        quote.author.toLowerCase().includes(searchTerm)
+        quote.author.toLowerCase().includes(searchTerm),
     );
   }, [data, search]);
 

@@ -23,7 +23,7 @@ describe("AppThemeSwitcher", () => {
         <AppThemeSwitcher />
         <ReadMode />
       </>,
-      { wrapper }
+      { wrapper },
     );
 
     expect(getAllByTestId("theme-switcher-sun").length).toBeGreaterThan(0);

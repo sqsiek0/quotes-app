@@ -98,7 +98,7 @@ describe("Quotes screen", () => {
       expect(
         getByText(`
 Error: ${mockError.message}
-            `)
+            `),
       ).toBeTruthy();
       expect(getByText("Try again")).toBeTruthy();
     });

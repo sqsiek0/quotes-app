@@ -11,7 +11,7 @@ describe("AppQuoteCard", () => {
       <AppQuoteCard quote={quote} author={author} />,
       {
         wrapper: ({ children }) => <ThemeProvider>{children}</ThemeProvider>,
-      }
+      },
     );
 
     expect(getByText(quote)).toBeTruthy();

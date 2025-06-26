@@ -21,7 +21,7 @@ type Action =
 
 function reducer(
   state: FavouritiesContextType,
-  action: Action
+  action: Action,
 ): FavouritiesContextType {
   switch (action.type) {
     case "hydrate":

@@ -23,10 +23,9 @@ export async function fetchListQuotes(
   // throw new Error("fetchRandomQuote is not implemented yet");
   await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate network delay
 
-  const { data } = await apiClient.get<QuoteListResponse>('', {
+  const { data } = await apiClient.get<QuoteListResponse>("", {
     params: { limit, skip },
-  }
-);
-  
+  });
+
   return data;
 }
